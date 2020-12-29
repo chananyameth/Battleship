@@ -1,5 +1,5 @@
 import packet_builder
-import Battleship
+import battleship_player
 from converters import *
 import pytest
 
@@ -15,7 +15,7 @@ def game_accept_packet_test():
 
 
 def placing_inform_packet_test():
-    player = Battleship.BattleshipPlayer()
+    player = battleship_player.BattleshipPlayer()
     player.nonce = 456  # constant for testing
     assert packet_builder.placing_inform_packet(1, player) == \
            b"\x01\x03_\xec\xebf\xff\xc8o8\xd9Rxlmily\xc2\xdb\xc29\xddN\x91\xb4g)\xd7:'\xfbW\xe9"
@@ -33,7 +33,7 @@ def turn_result_packet_test():
 
 
 def placement_inform_packet_test():
-    player = Battleship.BattleshipPlayer()
+    player = battleship_player.BattleshipPlayer()
     player.nonce = 456  # constant for testing
     assert packet_builder.placement_inform_packet(1, player) == \
            b"\x01\x06\x0b\x00R\x01\x12\x009\x00F\x00\xc8\x01\x00\x00"
