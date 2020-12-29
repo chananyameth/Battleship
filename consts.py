@@ -1,10 +1,25 @@
 from enum import Enum
 
+# Player stuff
+PORT = 8300
+
+INVALID_HASH = -1
+
 BOARD_SIDE_SIZE = 10
 
 MIN_NONCE = 0
 MAX_NONCE = 2 ** 32  # 4 bytes
 
+# ------------------------------------------
+# Timeouts, in seconds
+GAME_ACCEPT_TIMEOUT = 60
+PLACING_INFORM_TIMEOUT = 60 * 10
+TURN_TIMEOUT = 60 * 10
+TURN_RESULT_TIMEOUT = 10
+PLACEMENT_INFO_TIMEOUT = 10
+
+# ------------------------------------------
+# Submarine stuff
 POSITION = 0
 ORIENTATION = 1
 INVALID_POSITION = -1
