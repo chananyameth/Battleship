@@ -18,16 +18,16 @@ def game_accept_packet(version: int) -> bytes:
 
 
 def placing_inform_packet(version: int, player) -> bytes:
-    return struct.pack("BB", version, PLACING_INFORM_MESSAGE_TYPE) + utils.calculate_hash(player)
+    return struct.pack("BB", version, PLACING_INFORM_MESSAGE_TYPE) + player.get_hash()
 
 
 def turn_packet(version: int, position: int) -> bytes:
     return struct.pack("BBB", version, TURN_MESSAGE_TYPE, position)
 
 
-def turn_result_packet(version: int, is_hit: bool, submarine) -> bytes:
+def turn_result_packet(version: int, is_hit: bool, submarine: Submarine) -> bytes:
     # ? might pack into 1 byte instead of 1 bit
-    return struct.pack("BB?B", version, TURN_RESULT_MESSAGE_TYPE, is_hit, submarine)
+    return struct.pack("BB?B", version, TURN_RESULT_MESSAGE_TYPE, is_hit, submarine.value)
 
 
 def placement_inform_packet(version: int, player) -> bytes:
@@ -35,9 +35,9 @@ def placement_inform_packet(version: int, player) -> bytes:
     return struct.pack("BBB?B?B?B?B?i",
                        version,
                        PLACEMENT_INFORM_MESSAGE_TYPE,
-                       *player.submarines[SUB_5],
-                       *player.submarines[SUB_4],
-                       *player.submarines[SUB_3_1],
-                       *player.submarines[SUB_3_2],
-                       *player.submarines[SUB_2],
+                       *player.submarines[Submarine.SUB_5],
+                       *player.submarines[Submarine.SUB_4],
+                       *player.submarines[Submarine.SUB_3_1],
+                       *player.submarines[Submarine.SUB_3_2],
+                       *player.submarines[Submarine.SUB_2],
                        player.nonce)
