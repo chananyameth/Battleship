@@ -1,6 +1,6 @@
 import packet_builder
 import Battleship
-from utils import *
+from converters import *
 import pytest
 
 

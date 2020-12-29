@@ -1,5 +1,5 @@
 import struct
-from utils import *
+from consts import *
 
 GAME_INVITE_MESSAGE_TYPE = 0x1
 GAME_ACCEPT_MESSAGE_TYPE = 0x2
