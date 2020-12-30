@@ -195,12 +195,3 @@ class BattleshipGame:
         self.player.print_board()
         print("Opponent's board:", end="")
         self.opponent.print_board()
-
-
-if __name__ == "__main__":
-    import sys
-
-    if len(sys.argv) == 1:
-        player1 = BattleshipGame()
-    else:
-        player2 = BattleshipGame(opponent_address=sys.argv[1])
