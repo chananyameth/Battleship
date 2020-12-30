@@ -8,9 +8,9 @@ def get_x_y(sub_no, len):
     x, y = -1, -1
     while (not 0 <= x <= BOARD_SIDE_SIZE) or (not 0 <= y <= BOARD_SIDE_SIZE):
         try:
-            x, y = map(int, input(f"Enter sub No. {sub_no} (len={len})'s top-left position: ").split())
+            x, y = map(int, input(f"Enter sub No. {sub_no} (len={len})'s top-left position (x, y): ").split())
         except ValueError:
-            print("invalid input")
+            print("invalid input. enter two numbers with space in between.")
     return x, y
 
 
