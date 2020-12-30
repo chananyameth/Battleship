@@ -46,7 +46,11 @@ class BattleshipGame:
         except timeout as _:
             print("The game finished because of timeout.")
         except exceptions.SubmarineGameError as error:
-            print(f"The game finished unexpectedly. details:\n{error}")
+            print(f"The game finished unexpectedly. probably something went wrong with the communication.")
+            print(f"details:\n{error}")
+        except Exception as error: # for keyboard interrupt, and so on
+            print(f"The game finished unexpectedly.")
+            print(f"details:\n{error}")
 
     def start_game_active(self):
         self.send_game_invite()
