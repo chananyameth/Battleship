@@ -1,22 +1,15 @@
 from hashlib import sha256
 from random import randrange
 from functools import reduce
+from converters import coordinate_to_number, number_to_coordinate
 
 from consts import *
-from converters import coordinate_to_number, number_to_coordinate
 
 
 class BattleshipPlayer:
-    def __init__(self, submarines: dict = None):
+    def __init__(self, submarines: dict):
         self.nonce = randrange(MIN_NONCE, MAX_NONCE)
-        if not submarines:
-            self.submarines = {Submarine.SUB_5: [coordinate_to_number(1, 1), VERTICAL_ORIENTATION],
-                               Submarine.SUB_4: [coordinate_to_number(2, 8), HORIZONTAL_ORIENTATION],
-                               Submarine.SUB_3_1: [coordinate_to_number(8, 1), VERTICAL_ORIENTATION],
-                               Submarine.SUB_3_2: [coordinate_to_number(7, 5), VERTICAL_ORIENTATION],
-                               Submarine.SUB_2: [coordinate_to_number(0, 7), VERTICAL_ORIENTATION]}  # default positions
-        else:
-            self.submarines = submarines
+        self.submarines = submarines
         self.board = populate_board(self.submarines)
 
     def at(self, column: int, row: int) -> Submarine:
@@ -25,6 +18,13 @@ class BattleshipPlayer:
 
     def get_hash(self):
         return calculate_hash(self)
+
+    def print_board(self):
+        for i in range(len(self.board)):
+            if i % BOARD_SIDE_SIZE == 0:
+                print("")  # new line
+            print(chr(submarines_characters_ord[self.board[i]]), sep="", end="")
+        print("\n")  # new lines
 
 
 def calculate_hash(player: BattleshipPlayer) -> bytes:
@@ -39,10 +39,10 @@ def calculate_hash(player: BattleshipPlayer) -> bytes:
 
 def populate_board(submarines: dict) -> list:
     """populate the board according to the given submarines"""
-    board = [0x0 for _ in range(BOARD_SIDE_SIZE ** 2)]  # Empty board
+    board = [Submarine.NO_SUB for _ in range(BOARD_SIDE_SIZE ** 2)]  # Empty board
     for sub_name, sub_data in submarines.items():
         column, row = number_to_coordinate(sub_data[POSITION])
-        for i in range(sub_length[sub_name]):
+        for i in range(submarines_length[sub_name]):
             if sub_data[ORIENTATION] == VERTICAL_ORIENTATION:
                 board[coordinate_to_number(column, row + i)] = sub_name
             else:
